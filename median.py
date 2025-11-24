@@ -49,7 +49,7 @@ def median_filter(style="wave", plot=True):
         if plot:
             plot_data(num_points, start, end, noisy_wave, median_list)
 
-        return 
+        return median_list
 
     else:
         raise NameError("Invalid name of data style")
