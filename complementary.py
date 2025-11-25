@@ -8,31 +8,33 @@ def comp_filter():
     start = 0
     end = 20
     num_points = 100
+
+    # Examine the other files to see how these functions work
     median_filter_result = median_filter("wave",False)
     average_filter_result = average_filter("wave",False)
-    # print(average_filter_result)
-    print(median_filter_result)
-
-    # Iterate through these to produce a better result
 
     filtered_list = []
+    alpha = 0.10
 
-    k_med = 0.60
-    k_avg = 0.40
+    t = np.linspace(start, end, num_points)     
 
-    while len(median_filter_result) + len(average_filter_result) > 0:
+    # This loop is to act as taking a new measurement at each time step.
+    # The results are from the median and average filters respectively.
+    for loop in t:
         med_point = median_filter_result[0]
+
         avg_point = average_filter_result[0]
 
-        filtered_list.append(med_point*k_med+avg_point*k_avg)
+        # Consider median 10% and average 90%
+        filtered_value = alpha * med_point + (1 - alpha) * avg_point 
+
+        filtered_list.append(filtered_value)
 
         del median_filter_result[0]
         del average_filter_result[0]
 
-
     plt.figure()
 
-    t = np.linspace(start, end, num_points)     
 
     length = np.pi * 2 * 3
     sin_wave = np.sin(np.arange(0, length, length/num_points))
@@ -45,11 +47,7 @@ def comp_filter():
     plt.show()
 
 
-
-
-
-
-
+#TODO Run in your terminal using python complementary.py in the filters directory
 
 if __name__ == "__main__":
     #### Define and parse (optional) arguments for the script ##
